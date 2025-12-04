@@ -43,9 +43,20 @@ function CartProvider({ children }) {
     });
   };
 
+  const getCartCount = () => {
+    return Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
+  };
+
   //   const value = { cart, setCart, addToCart };
   const value = useMemo(
-    () => ({ cart, setCart, addToCart, removeFromCart, updateProductQuantity }),
+    () => ({
+      cart,
+      setCart,
+      addToCart,
+      removeFromCart,
+      updateProductQuantity,
+      getCartCount,
+    }),
     [cart]
   );
 
