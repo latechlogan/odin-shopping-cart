@@ -26,9 +26,26 @@ function CartProvider({ children }) {
     });
   };
 
+  const updateProductQuantity = (productId, newQuantity) => {
+    if (newQuantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+
+    setCart((prevCart) => {
+      return {
+        ...prevCart,
+        [productId]: {
+          ...prevCart[productId],
+          quantity: newQuantity,
+        },
+      };
+    });
+  };
+
   //   const value = { cart, setCart, addToCart };
   const value = useMemo(
-    () => ({ cart, setCart, addToCart, removeFromCart }),
+    () => ({ cart, setCart, addToCart, removeFromCart, updateProductQuantity }),
     [cart]
   );
 
