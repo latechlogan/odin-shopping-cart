@@ -5,6 +5,7 @@ import Products from "./routes/Products.jsx";
 import ProductDetails from "./routes/ProductDetails.jsx";
 import Cart from "./routes/Cart.jsx";
 import { useEffect, useState } from "react";
+import Nav from "./components/Nav/Nav.jsx";
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -33,6 +34,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
