@@ -317,4 +317,125 @@ describe("CartContext", () => {
       expect(result.current.cart[2].quantity).toBe(3);
     });
   });
+
+  // Tests for getCartCount
+  describe("getCartCount", () => {
+    test("returns 0 for empty cart", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      expect(result.current.getCartCount()).toBe(0);
+    });
+
+    test("returns correct count for single product", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result.current.addToCart(product, 5);
+      });
+
+      expect(result.current.getCartCount()).toBe(5);
+    });
+
+    test("returns total count across multiple products", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product1 = { id: 1, name: "Product 1", price: 10 };
+      const product2 = { id: 2, name: "Product 2", price: 20 };
+      const product3 = { id: 3, name: "Product 3", price: 30 };
+
+      act(() => {
+        result.current.addToCart(product1, 2);
+        result.current.addToCart(product2, 3);
+        result.current.addToCart(product3, 5);
+      });
+
+      // 2 + 3 + 5 = 10
+      expect(result.current.getCartCount()).toBe(10);
+    });
+
+    test("updates count after adding to existing product", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result.current.addToCart(product, 3);
+      });
+
+      expect(result.current.getCartCount()).toBe(3);
+
+      act(() => {
+        result.current.addToCart(product, 2);
+      });
+
+      expect(result.current.getCartCount()).toBe(5);
+    });
+
+    test("updates count after removing product", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product1 = { id: 1, name: "Product 1", price: 10 };
+      const product2 = { id: 2, name: "Product 2", price: 20 };
+
+      act(() => {
+        result.current.addToCart(product1, 5);
+        result.current.addToCart(product2, 3);
+      });
+
+      expect(result.current.getCartCount()).toBe(8);
+
+      act(() => {
+        result.current.removeFromCart(1);
+      });
+
+      expect(result.current.getCartCount()).toBe(3);
+    });
+
+    test("updates count after updating product quantity", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product1 = { id: 1, name: "Product 1", price: 10 };
+      const product2 = { id: 2, name: "Product 2", price: 20 };
+
+      act(() => {
+        result.current.addToCart(product1, 5);
+        result.current.addToCart(product2, 3);
+      });
+
+      expect(result.current.getCartCount()).toBe(8);
+
+      act(() => {
+        result.current.updateProductQuantity(1, 10);
+      });
+
+      expect(result.current.getCartCount()).toBe(13);
+    });
+
+    test("returns 0 after removing product with updateProductQuantity", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result.current.addToCart(product, 5);
+      });
+
+      expect(result.current.getCartCount()).toBe(5);
+
+      act(() => {
+        result.current.updateProductQuantity(1, 0);
+      });
+
+      expect(result.current.getCartCount()).toBe(0);
+    });
+  });
 });
