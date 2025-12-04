@@ -1,10 +1,6 @@
 import { describe, test, expect, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { CartProvider, CartContext } from "./CartContext";
-import { useContext } from "react";
-
-// Custom hook to consume the CartContext
-const useCart = () => useContext(CartContext);
+import { CartProvider, useCart } from "./CartContext";
 
 describe("CartContext", () => {
   beforeEach(() => {
@@ -587,6 +583,29 @@ describe("CartContext", () => {
 
       const saved = JSON.parse(localStorage.getItem("cart"));
       expect(saved[1].quantity).toBe(6);
+    });
+  });
+
+  // Tests for useCart hook
+  describe("useCart hook", () => {
+    test("throws error when used outside CartProvider", () => {
+      // Attempt to use the hook without wrapping in CartProvider
+      expect(() => {
+        renderHook(() => useCart());
+      }).toThrow("useCart must be used within a CartProvider");
+    });
+
+    test("returns context value when used inside CartProvider", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      // Should have all the expected properties
+      expect(result.current).toHaveProperty("cart");
+      expect(result.current).toHaveProperty("setCart");
+      expect(result.current).toHaveProperty("addToCart");
+      expect(result.current).toHaveProperty("removeFromCart");
+      expect(result.current).toHaveProperty("updateProductQuantity");
+      expect(result.current).toHaveProperty("getCartCount");
     });
   });
 });
