@@ -1,9 +1,32 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useMemo, useEffect } from "react";
 
 const CartContext = createContext();
 
 function CartProvider({ children }) {
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
+        const parsed = JSON.parse(savedCart);
+
+        // Validate the structure
+        if (typeof parsed === "object" && parsed !== null) {
+          return parsed;
+        }
+
+        throw new Error("Invalid cart structure");
+      }
+      return {};
+    } catch (error) {
+      console.error("Failed to load cart:", error);
+      localStorage.removeItem("cart");
+      return {};
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product, quantity = 1) => {
     setCart((prevCart) => {
@@ -47,7 +70,7 @@ function CartProvider({ children }) {
     return Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
   };
 
-  //   const value = { cart, setCart, addToCart };
+  // refactored: const value = { cart, setCart, addToCart };
   const value = useMemo(
     () => ({
       cart,
