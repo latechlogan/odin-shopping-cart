@@ -1,4 +1,4 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { CartProvider, CartContext } from "./CartContext";
 import { useContext } from "react";
@@ -7,6 +7,10 @@ import { useContext } from "react";
 const useCart = () => useContext(CartContext);
 
 describe("CartContext", () => {
+  beforeEach(() => {
+    // Clear localStorage before each test to ensure clean state
+    localStorage.clear();
+  });
   test("initializes with empty cart", () => {
     const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
     const { result } = renderHook(() => useCart(), { wrapper });
@@ -436,6 +440,153 @@ describe("CartContext", () => {
       });
 
       expect(result.current.getCartCount()).toBe(0);
+    });
+  });
+
+  // Tests for localStorage persistence
+  describe("localStorage persistence", () => {
+    test("loads cart from localStorage on mount", () => {
+      const existingCart = {
+        1: { id: 1, name: "Product 1", price: 10, quantity: 2 },
+        2: { id: 2, name: "Product 2", price: 20, quantity: 3 },
+      };
+      localStorage.setItem("cart", JSON.stringify(existingCart));
+
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      expect(result.current.cart).toEqual(existingCart);
+    });
+
+    test("saves cart to localStorage when items are added", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result.current.addToCart(product, 2);
+      });
+
+      const saved = JSON.parse(localStorage.getItem("cart"));
+      expect(saved[1]).toEqual({
+        id: 1,
+        name: "Test Product",
+        price: 10,
+        quantity: 2,
+      });
+    });
+
+    test("saves cart to localStorage when items are removed", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product1 = { id: 1, name: "Product 1", price: 10 };
+      const product2 = { id: 2, name: "Product 2", price: 20 };
+
+      act(() => {
+        result.current.addToCart(product1, 2);
+        result.current.addToCart(product2, 3);
+      });
+
+      act(() => {
+        result.current.removeFromCart(1);
+      });
+
+      const saved = JSON.parse(localStorage.getItem("cart"));
+      expect(saved[1]).toBeUndefined();
+      expect(saved[2]).toBeDefined();
+    });
+
+    test("saves cart to localStorage when quantity is updated", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result.current.addToCart(product, 2);
+      });
+
+      act(() => {
+        result.current.updateProductQuantity(1, 10);
+      });
+
+      const saved = JSON.parse(localStorage.getItem("cart"));
+      expect(saved[1].quantity).toBe(10);
+    });
+
+    test("initializes with empty cart when localStorage is empty", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      expect(result.current.cart).toEqual({});
+    });
+
+    test("handles invalid JSON in localStorage gracefully", () => {
+      // Spy on console.error to verify it's called
+      const consoleErrorSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
+
+      localStorage.setItem("cart", "invalid json {{{");
+
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      // Should NOT throw - should gracefully handle
+      expect(result.current.cart).toEqual({});
+
+      // Should log the error
+      expect(consoleErrorSpy).toHaveBeenCalled();
+
+      // Should have replaced corrupted data with empty cart
+      expect(localStorage.getItem("cart")).toBe("{}");
+
+      consoleErrorSpy.mockRestore();
+    });
+
+    test("persists cart across multiple component mounts", () => {
+      // First mount - add items
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result: result1, unmount } = renderHook(() => useCart(), {
+        wrapper,
+      });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result1.current.addToCart(product, 5);
+      });
+
+      // Unmount the component
+      unmount();
+
+      // Second mount - data should persist
+      const { result: result2 } = renderHook(() => useCart(), { wrapper });
+
+      expect(result2.current.cart[1]).toEqual({
+        id: 1,
+        name: "Test Product",
+        price: 10,
+        quantity: 5,
+      });
+    });
+
+    test("updates localStorage on rapid consecutive operations", () => {
+      const wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+      const { result } = renderHook(() => useCart(), { wrapper });
+
+      const product = { id: 1, name: "Test Product", price: 10 };
+
+      act(() => {
+        result.current.addToCart(product, 1);
+        result.current.addToCart(product, 2);
+        result.current.addToCart(product, 3);
+      });
+
+      const saved = JSON.parse(localStorage.getItem("cart"));
+      expect(saved[1].quantity).toBe(6);
     });
   });
 });
