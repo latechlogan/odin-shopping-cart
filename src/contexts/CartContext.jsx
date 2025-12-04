@@ -19,8 +19,18 @@ function CartProvider({ children }) {
     });
   };
 
+  const removeFromCart = (productId) => {
+    setCart((prevCart) => {
+      const { [productId]: _, ...newCart } = prevCart;
+      return newCart;
+    });
+  };
+
   //   const value = { cart, setCart, addToCart };
-  const value = useMemo(() => ({ cart, setCart, addToCart }), [cart]);
+  const value = useMemo(
+    () => ({ cart, setCart, addToCart, removeFromCart }),
+    [cart]
+  );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
