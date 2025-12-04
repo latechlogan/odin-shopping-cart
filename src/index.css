@@ -66,3 +66,9 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+/* Google Font -- Inter */
+
+body {
+  font-family: "Inter", sans-serif;
+}
