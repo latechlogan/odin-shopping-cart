@@ -21,7 +21,6 @@ export default function App() {
         }
         const jsonData = await response.json();
         setData(jsonData);
-        console.log(jsonData);
       } catch (error) {
         setError(error);
       } finally {
@@ -36,7 +35,10 @@ export default function App() {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home data={data} loading={loading} error={error} />}
+        />
         <Route path="/products" element={<Products />} />
         <Route
           path="/product-details/:productId"
