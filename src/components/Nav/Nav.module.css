@@ -1,12 +1,12 @@
 .sectionWrapper {
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
 }
 
 .navbar {
   width: 100%;
+  max-width: 1280px;
   padding: 1rem;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
