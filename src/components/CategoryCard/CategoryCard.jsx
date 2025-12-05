@@ -1,13 +1,16 @@
 import styles from "./CategoryCard.module.css";
 
-export default function CategoryCard({ data, loading, error }) {
-  if (!data) return <div>Loading...</div>;
-
-  const products = Object.values(data);
+export default function CategoryCard({ data }) {
+  if (!data || data.length === 0) return null;
 
   return (
-    <>
-      <h1 className={styles.red}>Category Card</h1>
-    </>
+    <div>
+      <h3>{data[1].category}</h3>
+      <div>
+        {data.slice(0, 4).map((item) => {
+          return <li key={item.id}>{item.title}</li>;
+        })}
+      </div>
+    </div>
   );
 }

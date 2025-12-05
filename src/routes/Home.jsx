@@ -6,10 +6,19 @@ export default function Home({ data, loading, error }) {
   if (error) return <div>Error: {error.message}</div>;
   if (!data) return null;
 
+  const categories = data.reduce((acc, item) => {
+    if (!acc[item.category]) acc[item.category] = [];
+    acc[item.category].push(item);
+    return acc;
+  }, {});
+
   return (
     <>
       <Hero />
-      <CategoryCard data={data} loading={loading} error={error} />
+      <CategoryCard data={categories["men's clothing"]} />
+      <CategoryCard data={categories["women's clothing"]} />
+      <CategoryCard data={categories["jewelery"]} />
+      <CategoryCard data={categories["electronics"]} />
     </>
   );
 }
