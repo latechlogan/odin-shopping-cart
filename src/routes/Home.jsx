@@ -1,3 +1,4 @@
+import styles from "./Home.module.css";
 import CategoryCard from "../components/CategoryCard/CategoryCard";
 import Hero from "../components/Hero/Hero";
 
@@ -15,10 +16,16 @@ export default function Home({ data, loading, error }) {
   return (
     <>
       <Hero />
-      <CategoryCard data={categories["men's clothing"]} />
-      <CategoryCard data={categories["women's clothing"]} />
-      <CategoryCard data={categories["jewelery"]} />
-      <CategoryCard data={categories["electronics"]} />
+      <div className={styles.sectionWrapper}>
+        <div className={styles.categorySection}>
+          <div className={styles.categoryGrid}>
+            <CategoryCard data={categories["men's clothing"]} />
+            <CategoryCard data={categories["women's clothing"]} />
+            <CategoryCard data={categories["jewelery"]} />
+            <CategoryCard data={categories["electronics"]} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }
