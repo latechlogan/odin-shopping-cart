@@ -13,7 +13,7 @@ export default function CategoryCard({ data }) {
         {data.slice(0, 4).map((item) => {
           return (
             <Link
-              to="/product-details/item.id"
+              to={`/product-details/${item.id}`}
               className={styles.categoryItem}
               key={item.id}
             >
