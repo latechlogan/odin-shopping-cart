@@ -39,7 +39,10 @@ export default function App() {
           path="/"
           element={<Home data={data} loading={loading} error={error} />}
         />
-        <Route path="/products" element={<Products />} />
+        <Route
+          path="/products"
+          element={<Products data={data} loading={loading} error={error} />}
+        />
         <Route
           path="/product-details/:productId"
           element={<ProductDetails />}
