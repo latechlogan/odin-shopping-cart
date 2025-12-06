@@ -2,6 +2,8 @@
   position: relative;
   width: 100%;
   aspect-ratio: 2.39 / 1;
+  min-height: 320px;
+  max-height: 560px;
   background: url(../../assets/fashion.jpg);
   background-size: cover;
   background-position: center center;
@@ -15,7 +17,12 @@
   width: 100%;
   height: 100%;
   /* background-color: hsla(0, 0%, 0%, 0.4); */
-  background: linear-gradient(0deg, hsla(0, 0%, 0%, 0.4), hsla(0, 0%, 0%, 0));
+  background: linear-gradient(
+    35deg,
+    hsla(0, 0%, 0%, 0.4) 20%,
+    hsla(0, 0%, 0%, 0) 80%
+  );
+  /* background: radial-gradient(2000px at top right, transparent 10%, black); */
 }
 
 .heroSection {
@@ -35,7 +42,7 @@
   width: 100%;
   max-width: 320px;
   z-index: 100;
-  margin: 2.986rem 0 0 0;
+  /* margin: 2.986rem 0 0 0; */
 }
 
 .eyebrow {
