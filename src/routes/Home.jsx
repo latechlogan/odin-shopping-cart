@@ -2,10 +2,11 @@ import styles from "./Home.module.css";
 import CategoryCard from "../components/CategoryCard/CategoryCard";
 import Hero from "../components/Hero/Hero";
 import Loader from "../components/Loader/Loader";
+import Error from "../components/Error/Error";
 
 export default function Home({ data, loading, error }) {
   if (loading) return <Loader />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <Error error={error} />;
   if (!data) return null;
 
   const categories = data.reduce((acc, item) => {

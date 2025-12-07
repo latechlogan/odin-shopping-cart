@@ -1,9 +1,10 @@
 import { useSearchParams } from "react-router";
 import Loader from "../components/Loader/Loader";
+import Error from "../components/Error/Error";
 
 export default function Products({ data, loading, error }) {
   if (loading) return <Loader />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <Error error={error} />;
   if (!data) return null;
 
   const [searchParams] = useSearchParams();

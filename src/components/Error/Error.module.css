@@ -1,4 +1,4 @@
-.loaderContainer {
+.errorContainer {
   width: 100%;
   margin: 1rem;
   display: flex;
@@ -7,6 +7,11 @@
   align-items: center;
 }
 
-.loaderText {
-  margin-top: 1rem;
+.errorHeading {
+  font-size: 1.728rem;
+  margin-bottom: 0.5rem;
+}
+
+.errorMessage {
+  font-size: 1rem;
 }
