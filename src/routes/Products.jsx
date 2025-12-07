@@ -22,32 +22,34 @@ export default function Products({ data, loading, error }) {
       <div className={styles.productsGrid}>
         {productsToDisplay.map((item) => {
           return (
-            <Link
-              to={`/product-details/${item.id}`}
-              className={styles.productCard}
-            >
-              <div className={styles.imgContainer}>
-                <img
-                  src={item.image}
-                  alt={item.description}
-                  className={styles.img}
-                ></img>
-              </div>
-              <span className={styles.title}>{item.title}</span>
-              <span className={styles.reviews}>
-                {item.rating.rate}
-                <StarRating
-                  starsLength="5"
-                  initialRating={Math.round(item.rating.rate * 2) / 2}
-                  isHalfRatingEnabled="true"
-                  isReadOnly="true"
-                  dimension="3.5"
-                />
-                ({item.rating.count})
-              </span>
-              <span className={styles.price}>${item.price}</span>
+            <div className={styles.productCard}>
+              <Link
+                to={`/product-details/${item.id}`}
+                className={styles.detailsLink}
+              >
+                <div className={styles.imgContainer}>
+                  <img
+                    src={item.image}
+                    alt={item.description}
+                    className={styles.img}
+                  ></img>
+                </div>
+                <span className={styles.title}>{item.title}</span>
+                <span className={styles.reviews}>
+                  {item.rating.rate}
+                  <StarRating
+                    starsLength="5"
+                    initialRating={Math.round(item.rating.rate * 2) / 2}
+                    isHalfRatingEnabled="true"
+                    isReadOnly="true"
+                    dimension="3.5"
+                  />
+                  ({item.rating.count})
+                </span>
+                <span className={styles.price}>${item.price}</span>
+              </Link>
               <button className={styles.cta}>Add to Cart</button>
-            </Link>
+            </div>
           );
         })}
       </div>
