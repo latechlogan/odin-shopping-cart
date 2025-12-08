@@ -45,7 +45,7 @@ export default function App() {
         />
         <Route
           path="/product-details/:productId"
-          element={<ProductDetails />}
+          element={<ProductDetails data={data} />}
         />
         <Route path="/cart" element={<Cart />} />
       </Routes>

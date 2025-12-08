@@ -38,18 +38,8 @@ export default function Products({ data, loading, error }) {
                   ></img>
                 </div>
                 <span className={styles.title}>{item.title}</span>
-                <span className={styles.reviews}>
-                  {item.rating.rate}
-                  <StarRating
-                    starsLength="5"
-                    initialRating={Math.round(item.rating.rate * 2) / 2}
-                    isHalfRatingEnabled="true"
-                    isReadOnly="true"
-                    dimension="3.5"
-                  />
-                  ({item.rating.count})
-                </span>
-                <span className={styles.price}>${item.price}</span>
+                <Reviews item={item} dimension={4} />
+                <span className={styles.price}>${item.price.toFixed(2)}</span>
               </Link>
               <button className={styles.cta} onClick={() => addToCart(item)}>
                 Add to Cart
@@ -59,5 +49,21 @@ export default function Products({ data, loading, error }) {
         })}
       </div>
     </div>
+  );
+}
+
+export function Reviews({ item, dimension, className }) {
+  return (
+    <span className={className || styles.reviews}>
+      {item.rating.rate}
+      <StarRating
+        starsLength="5"
+        initialRating={Math.round(item.rating.rate * 2) / 2}
+        isHalfRatingEnabled="true"
+        isReadOnly="true"
+        dimension={dimension}
+      />
+      ({item.rating.count})
+    </span>
   );
 }
