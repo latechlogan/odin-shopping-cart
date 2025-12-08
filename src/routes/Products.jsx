@@ -4,6 +4,7 @@ import Loader from "../components/Loader/Loader";
 import Error from "../components/Error/Error";
 import { Link } from "react-router";
 import { StarRating } from "react-flexible-star-rating";
+import { useCart } from "../contexts/CartContext";
 
 export default function Products({ data, loading, error }) {
   if (loading) return <Loader />;
@@ -17,12 +18,14 @@ export default function Products({ data, loading, error }) {
     ? data.filter((item) => item.category === targetCategory)
     : data;
 
+  const { addToCart } = useCart();
+
   return (
     <div className={styles.sectionWrapper}>
       <div className={styles.productsGrid}>
         {productsToDisplay.map((item) => {
           return (
-            <div className={styles.productCard}>
+            <div className={styles.productCard} key={item.id}>
               <Link
                 to={`/product-details/${item.id}`}
                 className={styles.detailsLink}
@@ -48,7 +51,9 @@ export default function Products({ data, loading, error }) {
                 </span>
                 <span className={styles.price}>${item.price}</span>
               </Link>
-              <button className={styles.cta}>Add to Cart</button>
+              <button className={styles.cta} onClick={() => addToCart(item)}>
+                Add to Cart
+              </button>
             </div>
           );
         })}
