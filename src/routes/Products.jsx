@@ -42,7 +42,7 @@ export default function Products({ data, loading, error }) {
                 <Reviews item={item} dimension={4} />
                 <span className={styles.price}>${item.price.toFixed(2)}</span>
               </Link>
-              <AddToCart options={false} item={item} />
+              <AddToCart showOptions={false} item={item} />
             </div>
           );
         })}
