@@ -5,8 +5,8 @@ import AddToCart from "../components/AddToCart/AddToCart";
 
 export default function ProductDetails({ data }) {
   const params = useParams();
-  const id = params.productId;
-  const item = data[id - 1]; //accounts for the differenece between data id and key
+  const productId = parseInt(params.productId);
+  const item = data.find((item) => item.id === productId);
 
   return (
     <div className={styles.sectionWrapper}>
