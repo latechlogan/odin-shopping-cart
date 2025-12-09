@@ -5,6 +5,7 @@ import Error from "../components/Error/Error";
 import { Link } from "react-router";
 import { StarRating } from "react-flexible-star-rating";
 import { useCart } from "../contexts/CartContext";
+import AddToCart from "../components/AddToCart/AddToCart";
 
 export default function Products({ data, loading, error }) {
   if (loading) return <Loader />;
@@ -41,9 +42,7 @@ export default function Products({ data, loading, error }) {
                 <Reviews item={item} dimension={4} />
                 <span className={styles.price}>${item.price.toFixed(2)}</span>
               </Link>
-              <button className={styles.cta} onClick={() => addToCart(item)}>
-                Add to Cart
-              </button>
+              <AddToCart options={false} item={item} />
             </div>
           );
         })}

@@ -73,17 +73,6 @@
   margin: 0.5rem 0 0 0;
 }
 
-.cta {
-  color: inherit;
-  font-size: 0.833rem;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 0 0 0;
-  background-color: rgb(255, 193, 7);
-  border: none;
-  border-radius: 1.5rem;
-  cursor: pointer;
-}
-
 .description {
   display: block;
   margin: 1.5rem 0;

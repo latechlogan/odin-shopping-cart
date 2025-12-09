@@ -2,6 +2,7 @@ import styles from "./ProductDetails.module.css";
 import { useParams } from "react-router";
 import { Reviews } from "./Products";
 import { useCart } from "../contexts/CartContext";
+import AddToCart from "../components/AddToCart/AddToCart";
 
 export default function ProductDetails({ data }) {
   const params = useParams();
@@ -21,9 +22,7 @@ export default function ProductDetails({ data }) {
           <h2 className={styles.title}>{item.title}</h2>
           <Reviews item={item} dimension={5} className={styles.reviews} />
           <span className={styles.price}>${item.price.toFixed(2)}</span>
-          <button className={styles.cta} onClick={() => addToCart(item)}>
-            Add to Cart
-          </button>
+          <AddToCart options={false} item={item} />
           <span className={styles.description}>{item.description}</span>
         </div>
       </div>
