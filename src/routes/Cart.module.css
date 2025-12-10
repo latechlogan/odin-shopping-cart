@@ -17,9 +17,14 @@
   max-width: 1280px;
   padding: 1rem;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.products {
+  width: calc(67% - 2rem);
 }
 
 .cartItem {
@@ -84,6 +89,8 @@
 }
 
 .charges {
+  width: calc(33%);
+  padding: 1rem;
   background-color: #f4f4f4;
   border-radius: 1rem;
 }
