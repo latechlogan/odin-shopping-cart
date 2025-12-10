@@ -1,6 +1,6 @@
 import styles from "./Cart.module.css";
 import { useCart } from "../contexts/CartContext";
-import { useState } from "react";
+import { Trash, Minus, Plus } from "react-feather";
 
 export default function Cart() {
   const { cart } = useCart();
@@ -40,16 +40,69 @@ export function CartItem({ item }) {
       <div className={styles.itemDetails}>
         <span className={styles.itemTitle}>{item.title}</span>
         <span className={styles.itemPrice}>${item.price.toFixed(2)}</span>
-        <span className={styles.itemQty}>
-          <UpdateCartQuantity item={item} />
-        </span>
+        <UpdateCartQuantity item={item} />
       </div>
     </div>
   );
 }
 
 export function UpdateCartQuantity({ item }) {
-  const [quantity, setQuantity] = useState(item.quantity);
+  const { updateProductQuantity } = useCart();
 
-  return <span>{quantity}</span>;
+  const handleQuantityChange = (e) => {
+    const sanitizedValue = e.target.value.replace(/[^0-9]/g, "");
+    const numericValue = parseInt(sanitizedValue, 10) || 1;
+    updateProductQuantity(item.id, numericValue);
+  };
+
+  const incrementQuantity = () => {
+    updateProductQuantity(item.id, item.quantity + 1);
+  };
+
+  const decrementQuantity = () => {
+    updateProductQuantity(item.id, item.quantity - 1);
+  };
+
+  return (
+    <div className={styles.quantitySection}>
+      <span className={styles.quantityTool}>
+        {/* <label htmlFor="quantity">Quantity</label> */}
+        <button
+          aria-label="decrease quantity in cart by one"
+          onClick={decrementQuantity}
+          className={styles.minusButton}
+        >
+          {item.quantity === 1 ? (
+            <Trash size={12} strokeWidth={3} />
+          ) : (
+            <Minus size={14} strokeWidth={3} />
+          )}
+        </button>
+
+        <input
+          id="quantity"
+          name="quantity"
+          type="tel"
+          value={item.quantity}
+          onFocus={(e) => e.target.select()}
+          onChange={handleQuantityChange}
+          className={styles.quantityInput}
+        />
+
+        <button
+          aria-label="increase quantity in cart by one"
+          onClick={incrementQuantity}
+          className={styles.plusButton}
+        >
+          <Plus size={14} strokeWidth={3} />
+        </button>
+      </span>
+      <button
+        onClick={() => updateProductQuantity(item.id, 0)}
+        className={styles.removeBtn}
+      >
+        Remove
+      </button>
+    </div>
+  );
 }
