@@ -45,7 +45,9 @@ export default function App() {
         />
         <Route
           path="/product-details/:productId"
-          element={<ProductDetails data={data} />}
+          element={
+            <ProductDetails data={data} loading={loading} error={error} />
+          }
         />
         <Route path="/cart" element={<Cart />} />
       </Routes>
