@@ -1,10 +1,56 @@
+.addToCart {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.quantitySection {
+  margin: 0 1rem 0 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* .quantitySection > label {
+  width: 100%;
+  margin: 0 0 0.5rem 0;
+} */
+
+.minusButton,
+.plusButton {
+  font-size: 1.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 1.875rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantityInput {
+  text-align: center;
+  width: 2.75rem;
+  height: 2.25rem;
+  margin: 0 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .cta {
   color: inherit;
   font-size: 0.833rem;
   padding: 0.5rem 1rem;
-  margin: 0.5rem 0 0 0;
+  margin: 0 0 0 0;
   background-color: rgb(255, 193, 7);
   border: none;
-  border-radius: 1.5rem;
+  border-radius: 1.875rem;
   cursor: pointer;
 }

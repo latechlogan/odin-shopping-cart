@@ -21,15 +21,16 @@ export default function AddToCart({ showOptions = false, item }) {
   };
 
   return (
-    <section>
+    <section className={styles.addToCart}>
       {showOptions && (
-        <span>
-          <label htmlFor="quantity">Qty</label>
+        <span className={styles.quantitySection}>
+          {/* <label htmlFor="quantity">Quantity</label> */}
           <button
             aria-label="decrease add to cart quantity by one"
             onClick={decrementQuantity}
+            className={styles.minusButton}
           >
-            -
+            &ndash;
           </button>
           <input
             id="quantity"
@@ -38,10 +39,12 @@ export default function AddToCart({ showOptions = false, item }) {
             value={quantity}
             onFocus={(e) => e.target.select()}
             onChange={handleQuantityChange}
+            className={styles.quantityInput}
           />
           <button
             aria-label="increase add to cart quantity by one"
             onClick={incrementQuantity}
+            className={styles.plusButton}
           >
             +
           </button>
