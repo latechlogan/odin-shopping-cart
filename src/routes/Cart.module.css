@@ -24,7 +24,7 @@
 }
 
 .products {
-  width: calc(100% - 2rem - 320px);
+  width: calc(100% - 2rem - 280px);
 }
 
 .cartItem {
@@ -161,23 +161,96 @@
   }
 }
 
-.total {
-  font-size: 1rem;
-  width: 100%;
-  margin: 1rem 0 0 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: baseline;
+.products {
+  .subtotal {
+    font-size: 1rem;
+    width: 100%;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
 
-  & > strong {
-    font-size: 1.25rem;
+    & > strong {
+      font-size: 1.25rem;
+    }
   }
 }
 
-.charges {
-  width: 320px;
-  padding: 1rem;
-  background-color: #f4f4f4;
-  border-radius: 1rem;
+.checkout {
+  position: sticky;
+  top: 2rem;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .charges {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: #f4f4f4;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    & > * {
+      width: 100%;
+      padding: 0;
+      margin: 0.5rem 0;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .subtotal,
+    .taxes,
+    .shipping {
+      font-size: 0.833rem;
+
+      .valueWrapper {
+        text-align: right;
+        font-weight: 600;
+      }
+    }
+
+    .total {
+      font-size: 1rem;
+      font-weight: 600;
+
+      .valueWrapper {
+        text-align: right;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .checkoutBtn {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 1rem 0 0 0;
+    background-color: rgb(255, 193, 7);
+    border: none;
+    border-radius: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    & > * {
+      margin: 0 0 0 0.25rem;
+      transition: all 120ms ease-in-out;
+    }
+
+    &:hover {
+      & > * {
+        margin: 0 0 0 0.5rem;
+        transition: all 120ms ease-in-out;
+      }
+    }
+  }
 }

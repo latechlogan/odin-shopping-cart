@@ -1,6 +1,7 @@
 import styles from "./Cart.module.css";
 import { useCart } from "../contexts/CartContext";
-import { Trash, Minus, Plus } from "react-feather";
+import { Trash, Minus, Plus, ArrowRight } from "react-feather";
+import { useMemo } from "react";
 
 export default function Cart() {
   const { cart, getCartCount } = useCart();
@@ -13,25 +14,60 @@ export default function Cart() {
       </div>
     );
 
-  const total = cartArray.reduce(
-    (accumulator, currentValue) =>
-      accumulator + currentValue.quantity * currentValue.price,
-    0
+  const subtotal = useMemo(
+    () =>
+      cartArray.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.quantity * currentValue.price,
+        0
+      ),
+    [cartArray]
   );
+  const tax = subtotal * 0.1099;
+  const shipping = 5.99;
+  const total = subtotal + tax + shipping;
 
   return (
     <div className={styles.sectionWrapper}>
       <div className={styles.cart}>
         <div className={styles.products}>
-          {cartArray.map((item) => {
-            return <CartItem item={item} />;
-          })}
-          <span className={styles.total}>
+          {cartArray.map((item) => (
+            <CartItem item={item} key={item.id} />
+          ))}
+          <span className={styles.subtotal}>
             Subtotal ({getCartCount()} items):&emsp;
-            <strong>${total.toFixed(2)}</strong>
+            <strong>${subtotal.toFixed(2)}</strong>
           </span>
         </div>
-        <div className={styles.charges}></div>
+        <div className={styles.checkout}>
+          <div className={styles.charges}>
+            <span className={styles.subtotal}>
+              Subtotal ({getCartCount()} items):
+              <span className={styles.valueWrapper}>
+                ${subtotal.toFixed(2)}
+              </span>
+            </span>
+            <span className={styles.taxes}>
+              Taxes & Fees:
+              <span className={styles.valueWrapper}>${tax.toFixed(2)}</span>
+            </span>
+            <span className={styles.shipping}>
+              Shipping:
+              <span className={styles.valueWrapper}>
+                ${shipping.toFixed(2)}
+              </span>
+            </span>
+            <hr />
+            <span className={styles.total}>
+              Total
+              <span className={styles.valueWrapper}>${total.toFixed(2)}</span>
+            </span>
+          </div>
+          <button className={styles.checkoutBtn}>
+            Proceed to Checkout
+            <ArrowRight size={16} />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -39,7 +75,7 @@ export default function Cart() {
 
 export function CartItem({ item }) {
   return (
-    <div key={item.id} className={styles.cartItem}>
+    <div className={styles.cartItem}>
       <div className={styles.itemImgContainer}>
         <img
           src={item.image}
@@ -79,7 +115,6 @@ export function UpdateCartQuantity({ item }) {
   return (
     <div className={styles.quantitySection}>
       <span className={styles.quantityTool}>
-        {/* <label htmlFor="quantity">Quantity</label> */}
         <button
           aria-label="decrease quantity in cart by one"
           onClick={decrementQuantity}
