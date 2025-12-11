@@ -24,7 +24,6 @@ export default function AddToCart({ showOptions = false, item }) {
     <section className={styles.addToCart}>
       {showOptions && (
         <span className={styles.quantityTool}>
-          {/* <label htmlFor="quantity">Quantity</label> */}
           <button
             aria-label="decrease add to cart quantity by one"
             onClick={decrementQuantity}
@@ -33,7 +32,6 @@ export default function AddToCart({ showOptions = false, item }) {
             &ndash;
           </button>
           <input
-            id="quantity"
             name="quantity"
             type="tel"
             value={quantity}
