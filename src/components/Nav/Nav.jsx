@@ -10,7 +10,9 @@ export default function Nav() {
   return (
     <section className={styles.sectionWrapper}>
       <div className={styles.navbar}>
-        <h1 className={styles.logo}>Odin Shopping Cart</h1>
+        <NavLink to="/" className={styles.logo}>
+          Amazin'
+        </NavLink>
         <nav className={styles.navContainer}>
           <NavLink to="/" className={styles.navLink}>
             Home
@@ -18,9 +20,6 @@ export default function Nav() {
           <NavLink to="/products" className={styles.navLink}>
             Products
           </NavLink>
-          {/* <NavLink to="/product-details/1" className={styles.navLink}>
-            Product Details
-          </NavLink> */}
           <NavLink to="/cart" className={styles.navLink}>
             <ShoppingCart className={styles.cartIcon} />
             {cartCount > 0 && (

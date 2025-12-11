@@ -16,7 +16,11 @@
 }
 
 .logo {
-  font-size: 1.44rem;
+  color: rgb(34, 34, 34);
+  font-weight: 700;
+  font-size: 1.728rem;
+  letter-spacing: -0.04rem;
+  text-decoration: none;
 }
 
 .navContainer {
@@ -27,6 +31,7 @@
 }
 
 .navLink {
+  color: rgb(34, 34, 34);
   position: relative;
   font-size: 1rem;
   font-weight: 500;
