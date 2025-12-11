@@ -6,7 +6,7 @@
   width: 100%;
   max-width: 1280px;
   padding: 1rem;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
 }
 
 .categoryGrid {
@@ -14,6 +14,5 @@
   height: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-template-rows: 1fr 1fr;
   gap: 1rem;
 }

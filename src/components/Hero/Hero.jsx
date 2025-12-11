@@ -16,6 +16,7 @@ export default function Hero() {
           </a>
         </span>
         <div className={styles.heroText}>
+          <span className={styles.eyebrow}>New Arrivals</span>
           <h2 className={styles.headline}>
             Elevated Essentials for Every Occasion
           </h2>

@@ -20,7 +20,6 @@ export default function CategoryCard({ data }) {
               <div className={styles.itemImgContainer}>
                 <img src={item.image} className={styles.itemImg} />
               </div>
-              <p className={styles.itemTitle}>{item.title}</p>
             </Link>
           );
         })}
@@ -29,7 +28,7 @@ export default function CategoryCard({ data }) {
         to={`/products?category=${category}`}
         className={styles.categoryCTA}
       >
-        Shop All {data[1].category}
+        Shop {data[1].category}
       </Link>
     </div>
   );
