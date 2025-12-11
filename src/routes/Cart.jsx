@@ -51,7 +51,10 @@ export function UpdateCartQuantity({ item }) {
 
   const handleQuantityChange = (e) => {
     const sanitizedValue = e.target.value.replace(/[^0-9]/g, "");
-    const numericValue = parseInt(sanitizedValue, 10) || 1;
+    const numericValue = parseInt(sanitizedValue, 10);
+    if (isNaN(numericValue)) {
+      return;
+    }
     updateProductQuantity(item.id, numericValue);
   };
 
