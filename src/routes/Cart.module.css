@@ -24,17 +24,22 @@
 }
 
 .products {
-  width: calc(67% - 2rem);
+  width: calc(100% - 2rem - 320px);
 }
 
 .cartItem {
   width: 100%;
-  padding: 0.5rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
+  border-bottom: 1px solid #ddd;
+
+  &:last-of-type {
+    border-bottom: 3px solid #ddd;
+  }
 }
 
 .itemImgContainer {
@@ -156,8 +161,22 @@
   }
 }
 
+.total {
+  font-size: 1rem;
+  width: 100%;
+  margin: 1rem 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
+
+  & > strong {
+    font-size: 1.25rem;
+  }
+}
+
 .charges {
-  width: calc(33%);
+  width: 320px;
   padding: 1rem;
   background-color: #f4f4f4;
   border-radius: 1rem;

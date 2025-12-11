@@ -3,7 +3,7 @@ import { useCart } from "../contexts/CartContext";
 import { Trash, Minus, Plus } from "react-feather";
 
 export default function Cart() {
-  const { cart } = useCart();
+  const { cart, getCartCount } = useCart();
   const cartArray = Object.values(cart);
 
   if (Object.keys(cart).length === 0)
@@ -13,6 +13,12 @@ export default function Cart() {
       </div>
     );
 
+  const total = cartArray.reduce(
+    (accumulator, currentValue) =>
+      accumulator + currentValue.quantity * currentValue.price,
+    0
+  );
+
   return (
     <div className={styles.sectionWrapper}>
       <div className={styles.cart}>
@@ -20,6 +26,10 @@ export default function Cart() {
           {cartArray.map((item) => {
             return <CartItem item={item} />;
           })}
+          <span className={styles.total}>
+            Subtotal ({getCartCount()} items):&emsp;
+            <strong>${total.toFixed(2)}</strong>
+          </span>
         </div>
         <div className={styles.charges}></div>
       </div>
