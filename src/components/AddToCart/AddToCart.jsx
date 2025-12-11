@@ -23,7 +23,7 @@ export default function AddToCart({ showOptions = false, item }) {
   return (
     <section className={styles.addToCart}>
       {showOptions && (
-        <span className={styles.quantitySection}>
+        <span className={styles.quantityTool}>
           {/* <label htmlFor="quantity">Quantity</label> */}
           <button
             aria-label="decrease add to cart quantity by one"

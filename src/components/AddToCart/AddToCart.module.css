@@ -6,42 +6,54 @@
   align-items: flex-start;
 }
 
-.quantitySection {
+.quantityTool {
+  height: calc(2rem + 6px);
   margin: 0 1rem 0 0;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
+  border: 3px solid rgb(255, 193, 7);
+  border-radius: calc(1rem + 3px);
 }
-
-/* .quantitySection > label {
-  width: 100%;
-  margin: 0 0 0.5rem 0;
-} */
 
 .minusButton,
 .plusButton {
-  font-size: 1.25rem;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: none;
-  border-radius: 1.875rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  margin: 0;
+  background: #fff;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.minusButton {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.plusButton {
+  border-radius: 0 1rem 1rem 0;
 }
 
 .quantityInput {
-  text-align: center;
-  width: 2.75rem;
-  height: 2.25rem;
-  margin: 0 0.5rem;
+  appearance: none;
+  width: 2.5rem;
+  height: 2rem;
+  background: #fff;
+  border: none;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  font-size: 0.833rem;
+  font-weight: 600;
 }
 
 .cta {
