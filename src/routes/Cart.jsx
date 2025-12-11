@@ -2,6 +2,7 @@ import styles from "./Cart.module.css";
 import { useCart } from "../contexts/CartContext";
 import { Trash, Minus, Plus, ArrowRight } from "react-feather";
 import { useMemo } from "react";
+import toast from "react-hot-toast";
 
 export default function Cart() {
   const { cart, getCartCount } = useCart();
@@ -32,7 +33,7 @@ export default function Cart() {
       <div className={styles.cart}>
         <div className={styles.products}>
           {cartArray.map((item) => (
-            <CartItem item={item} key={item.id} />
+            <CartItem item={item} key={item.id} toast={toast} />
           ))}
           <span className={styles.subtotal}>
             Subtotal ({getCartCount()} items):&emsp;
@@ -73,7 +74,7 @@ export default function Cart() {
   );
 }
 
-export function CartItem({ item }) {
+export function CartItem({ item, toast }) {
   return (
     <div className={styles.cartItem}>
       <div className={styles.itemImgContainer}>
@@ -86,14 +87,16 @@ export function CartItem({ item }) {
       <div className={styles.itemDetails}>
         <span className={styles.itemTitle}>{item.title}</span>
         <span className={styles.itemPrice}>${item.price.toFixed(2)}</span>
-        <UpdateCartQuantity item={item} />
+        <UpdateCartQuantity item={item} toast={toast} />
       </div>
     </div>
   );
 }
 
-export function UpdateCartQuantity({ item }) {
+export function UpdateCartQuantity({ item, toast }) {
   const { updateProductQuantity } = useCart();
+
+  const notifyDelete = () => toast("Item removed from cart.");
 
   const handleQuantityChange = (e) => {
     const sanitizedValue = e.target.value.replace(/[^0-9]/g, "");
@@ -102,6 +105,9 @@ export function UpdateCartQuantity({ item }) {
       return;
     }
     updateProductQuantity(item.id, numericValue);
+    if (numericValue === 0) {
+      notifyDelete();
+    }
   };
 
   const incrementQuantity = () => {
@@ -110,6 +116,14 @@ export function UpdateCartQuantity({ item }) {
 
   const decrementQuantity = () => {
     updateProductQuantity(item.id, item.quantity - 1);
+    if (item.quantity - 1 === 0) {
+      notifyDelete();
+    }
+  };
+
+  const removeItem = () => {
+    updateProductQuantity(item.id, 0);
+    notifyDelete();
   };
 
   return (
@@ -145,10 +159,7 @@ export function UpdateCartQuantity({ item }) {
           <Plus size={14} strokeWidth={3} />
         </button>
       </span>
-      <button
-        onClick={() => updateProductQuantity(item.id, 0)}
-        className={styles.removeBtn}
-      >
+      <button onClick={removeItem} className={styles.removeBtn}>
         Remove
       </button>
     </div>

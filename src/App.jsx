@@ -6,6 +6,7 @@ import ProductDetails from "./routes/ProductDetails.jsx";
 import Cart from "./routes/Cart.jsx";
 import { useEffect, useState } from "react";
 import Nav from "./components/Nav/Nav.jsx";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -51,6 +52,7 @@ export default function App() {
         />
         <Route path="/cart" element={<Cart />} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }

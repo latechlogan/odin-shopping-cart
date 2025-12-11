@@ -16,6 +16,7 @@
     "react-dom": "^19.2.0",
     "react-feather": "^2.0.10",
     "react-flexible-star-rating": "^1.0.7",
+    "react-hot-toast": "^2.6.0",
     "react-router": "^7.10.0"
   },
   "devDependencies": {
