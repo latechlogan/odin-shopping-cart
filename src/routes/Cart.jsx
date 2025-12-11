@@ -43,17 +43,17 @@ export default function Cart() {
         <div className={styles.checkout}>
           <div className={styles.charges}>
             <span className={styles.subtotal}>
-              Subtotal ({getCartCount()} items):
+              Subtotal ({getCartCount()} items)
               <span className={styles.valueWrapper}>
                 ${subtotal.toFixed(2)}
               </span>
             </span>
             <span className={styles.taxes}>
-              Taxes & Fees:
+              Taxes & Fees
               <span className={styles.valueWrapper}>${tax.toFixed(2)}</span>
             </span>
             <span className={styles.shipping}>
-              Shipping:
+              Shipping
               <span className={styles.valueWrapper}>
                 ${shipping.toFixed(2)}
               </span>
